@@ -4,34 +4,38 @@
 //
 // Items are distinct, each with a price, because offers may modify the price of one item independently of the
 // other (e.g. buy one and take half off the first one).
-//
-// Only the new item added will trigger the offer.
-// Items already present are already considered to have matched a previous rule.
 
-const freeItem = (productCode, buyNumber, takeNumber) => (oldItems, newItem) => {
-    // Append the item and finish if the new item added was not matching.
-    const result = oldItems.slice();
-    result.push(newItem);
+const Decimal = require('decimal.js');
 
-    if (newItem.productCode !== productCode) {
-        return result;
-    }
+const makeItemFree = (productCode, takeNumber, payNumber) => (items) => {
+    const result = [];
 
-    // Apply the offer by checking if the new count of matching products hits the desired amount,
-    // and then add the remaining number.
-    const matchCount = result.filter((item) => item.productCode == productCode).length;
+    let takeCount = 0;
 
-    if (matchCount === buyNumber) {
-        const freeItemCount = takeNumber - buyNumber;
+    items.forEach((item) => {
+        if (item.productCode === productCode) {
+            if (takeCount < payNumber) {
+                result.push(item);
+            } else {
+                result.push({
+                    productCode: item.productCode,
+                    productName: item.productName,
+                    price: new Decimal(0)
+                });
+            }
 
-        for (let i = 0; i < freeItemCount; i++) {
-            result.push(newItem);
+            takeCount++;
+            if (takeCount === takeNumber) {
+                takeCount = 0;
+            }
+        } else {
+            result.push(item);
         }
-    }
+    });
 
     return result;
 };
 
-module.exports.freeItem = freeItem;
+module.exports.makeItemFree = makeItemFree;
 
 

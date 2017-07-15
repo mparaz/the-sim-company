@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./scripts/the-sim-company.js",
-    "test": "jshint --exclude node_modules . && mocha"
+    "test": "jshint --exclude node_modules . && mocha --recursive"
   },
   "author": "Miguel Paraz <mparaz@gmail.com>",
   "license": "ISC",

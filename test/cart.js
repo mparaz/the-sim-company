@@ -30,7 +30,7 @@ describe('The SIM Company Cart', () => {
         });
     });
 
-    describe('An cart with a catalogue, no offers, and one item', () => {
+    describe('A cart with a catalogue, no offers, and one item', () => {
         let cart;
 
         const item1 = {
@@ -61,7 +61,7 @@ describe('The SIM Company Cart', () => {
         });
     });
 
-    describe('An cart with no catalogue, no offers, and attempt to add an item', () => {
+    describe('A cart with no catalogue, no offers, and attempt to add an item', () => {
         let cart;
 
         beforeEach(() => {
@@ -84,7 +84,7 @@ describe('The SIM Company Cart', () => {
         });
     });
 
-    describe('An cart with a catalogue, no offers, and two items', () => {
+    describe('A cart with a catalogue, no offers, and two items', () => {
         let cart;
 
         const item1 = {
