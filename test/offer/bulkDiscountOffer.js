@@ -67,6 +67,28 @@ describe('The SIM Company Offer', () => {
             }]);
         });
 
+        it('should make an item discounted if enough items are matching and repeated', () => {
+            const f = offer.bulkDiscount('product1', 1, Decimal(0.01));
+            expect(f([{
+                    productCode: 'product1',
+                    productName: 'product1',
+                    price: new Decimal(1.23)
+                }, {
+                    productCode: 'product1',
+                    productName: 'product1',
+                    price: new Decimal(3.21)
+                }]
+            )).to.deep.equal([{
+                productCode: 'product1',
+                productName: 'product1',
+                price: new Decimal(0.01)
+            }, {
+                productCode: 'product1',
+                productName: 'product1',
+                price: new Decimal(0.01)
+            }]);
+        });
+
         it('should not make an item discounted if not enough items are matching', () => {
             const f = offer.bulkDiscount('product1', 3, Decimal(0.01));
             expect(f([{

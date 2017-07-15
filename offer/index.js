@@ -55,7 +55,20 @@ const bulkDiscount = (productCode, quantity, newPrice) => (items) => {
     }
 };
 
+const bundleItem = (productCode, quantityMatch, bundledItem, quantityBundle) => (items) => {
+    const matchingItems = items.filter((item) => item.productCode === productCode);
+
+    const repeats = (matchingItems.length / quantityMatch) * quantityBundle;
+    const newItems = items.slice();
+
+    for (let i = 0; i < repeats; i++) {
+        newItems.push(bundledItem);
+    }
+    return newItems;
+};
+
 module.exports.makeItemFree = makeItemFree;
 module.exports.bulkDiscount = bulkDiscount;
+module.exports.bundleItem = bundleItem;
 
 
