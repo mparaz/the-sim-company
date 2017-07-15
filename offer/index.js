@@ -42,15 +42,15 @@ const bulkDiscount = (productCode, quantity, newPrice) => (items) => {
         return items;
     } else {
         return items.map((item) => {
-           if (item.productCode !== productCode) {
-               return item;
-           } else {
-               return {
-                   productCode: item.productCode,
-                   productName: item.productName,
-                   price: newPrice
-               };
-           }
+            if (item.productCode !== productCode) {
+                return item;
+            } else {
+                return {
+                    productCode: item.productCode,
+                    productName: item.productName,
+                    price: newPrice
+                };
+            }
         });
     }
 };
@@ -67,8 +67,20 @@ const bundleItem = (productCode, quantityMatch, bundledItem, quantityBundle) => 
     return newItems;
 };
 
+const discountAll = (percentDiscount) => (items) => {
+    const factor = new Decimal(100 - percentDiscount) / new Decimal(100);
+    return items.map((item) => {
+        return {
+            productCode: item.productCode,
+            productName: item.productName,
+            price: item.price.times(factor)
+        };
+    });
+};
+
 module.exports.makeItemFree = makeItemFree;
 module.exports.bulkDiscount = bulkDiscount;
 module.exports.bundleItem = bundleItem;
+module.exports.discountAll = discountAll;
 
 
