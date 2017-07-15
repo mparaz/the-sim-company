@@ -271,7 +271,7 @@ describe('The SIM Company Cart', () => {
         });
     });
 
-    describe('A cart with a catalogue, one offers, one coupon offer, and one item', () => {
+    describe('A cart with a catalogue, one offer, one coupon offer, and one item', () => {
         let cart;
         let offerFn1, offerFn2;
 
@@ -321,6 +321,71 @@ describe('The SIM Company Cart', () => {
             }]);
 
             expect(offerFn1.calledWithExactly([item1])).to.equal(true);
+            expect(offerFn2.calledWithExactly([{
+                productCode: 'productCode2',
+                productName: 'productName2',
+                price: Decimal(123.46)
+            }])).to.equal(true);
+        });
+    });
+
+    describe('A cart with a catalogue, one offer, one coupon offer applied twice, and one item', () => {
+        let cart;
+        let offerFn1, offerFn2;
+
+        const item1 = {
+            productCode: 'productCode1',
+            productName: 'productName1',
+            price: Decimal(123.45)
+        };
+
+        const item2 = {
+            productCode: 'productCode2',
+            productName: 'productName2',
+            price: Decimal(0)
+        };
+
+        beforeEach(() => {
+            offerFn1 = sinon.spy((items) => [{
+                productCode: 'productCode2',
+                productName: 'productName2',
+                price: Decimal(123.46)
+            }]);
+
+            offerFn2 = sinon.spy((items) => [{
+                productCode: 'productCode3',
+                productName: 'productName3',
+                price: Decimal(123.47)
+            }]);
+
+            cart = new ShoppingCart({
+                catalogue: [
+                    item1, item2
+                ],
+                offers: [
+                    offerFn1
+                ],
+                promoOffers: {
+                    'coupon2': [offerFn2]
+                }
+            });
+            cart.add('productCode1', 'coupon2');
+            cart.add('productCode2', 'coupon2');
+        });
+
+        it('should exist', () => {
+            expect(cart).to.be.an('object');
+        });
+
+        it('should have a total and items, coupon should not be applied twice', () => {
+            expect(cart.total()).to.deep.equal(new Decimal(123.47));
+            expect(cart.items()).to.deep.equal([{
+                productCode: 'productCode3',
+                productName: 'productName3',
+                price: Decimal(123.47)
+            }]);
+
+            expect(offerFn1.calledWithExactly([item1, item2])).to.equal(true);
             expect(offerFn2.calledWithExactly([{
                 productCode: 'productCode2',
                 productName: 'productName2',
