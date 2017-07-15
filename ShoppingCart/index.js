@@ -12,18 +12,28 @@ class ShoppingCart {
         });
 
         this._catalogue = catalogue;
+        this._pricingRules = pricingRules;
 
         this._items = [];
     }
 
     total() {
+        if (this._pricingRules.offers) {
+            // Replace items with the offer transformations.
+            let items = this._items;
+            this._pricingRules.offers.forEach((offerFn) => {
+                items = offerFn(items);
+            });
+
+            this._items = items;
+        }
+
         return this._items.reduce((sum, item) => {
             return sum.add(item.price);
         }, new Decimal(0));
     }
 
     items() {
-        // Prevent modification.
         return this._items.slice();
     }
 
