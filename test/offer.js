@@ -3,7 +3,9 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const offer = require('../../offer/index');
+const Decimal = require('decimal.js');
+
+const offer = require('../offer');
 
 describe('The SIM Company Offer', () => {
     describe('The Free Item Offer', () => {
@@ -12,9 +14,9 @@ describe('The SIM Company Offer', () => {
             expect(f([], {
                     productCode: 'someOtherProduct2'
                 }
-            )).to.deep.equal([[], [{
+            )).to.deep.equal([{
                 productCode: 'someOtherProduct2'
-            }]]);
+            }]);
         });
 
         it('should not add a free item if some other item was already present', () => {
@@ -26,11 +28,11 @@ describe('The SIM Company Offer', () => {
                 ], {
                     productCode: 'someOtherProduct2'
                 }
-            )).to.deep.equal([[], [{
+            )).to.deep.equal([{
                 productCode: 'someOtherProduct1'
             }, {
                 productCode: 'someOtherProduct2'
-            }]]);
+            }]);
         });
 
         it('should add a free item if there were no items and then the condition was met', () => {
@@ -38,11 +40,11 @@ describe('The SIM Company Offer', () => {
             expect(f([], {
                     productCode: 'product1'
                 }
-            )).to.deep.equal([[{
+            )).to.deep.equal([{
                 productCode: 'product1'
             }, {
                 productCode: 'product1'
-            }], []]);
+            }]);
         });
 
         it('should add a free item if there was one item and then the condition was met', () => {
@@ -52,13 +54,13 @@ describe('The SIM Company Offer', () => {
                 }], {
                     productCode: 'product1'
                 }
-            )).to.deep.equal([[{
+            )).to.deep.equal([{
                 productCode: 'product1'
             }, {
                 productCode: 'product1'
             }, {
                 productCode: 'product1'
-            }], []]);
+            }]);
         });
 
         // Only adding a matching item should trigger the offer.
@@ -72,33 +74,17 @@ describe('The SIM Company Offer', () => {
                 }], {
                     productCode: 'product2'
                 }
-            )).to.deep.equal([[], [{
+            )).to.deep.equal([{
                 productCode: 'product1'
             }, {
                 productCode: 'product1'
             }, {
                 productCode: 'product2'
-            }]]);
-        });
-
-        it('should add a free item if there was one matching and one non-matching item, then a matching item was added', () => {
-            const f = offer.freeItem('product1', 2, 3);
-            expect(f([{
-                    productCode: 'product1'
-                }, {
-                    productCode: 'product2'
-                }], {
-                    productCode: 'product1'
-                }
-            )).to.deep.equal([[{
-                productCode: 'product1'
-            }, {
-                productCode: 'product1'
-            }, {
-                productCode: 'product1'
-            }], [{
-                productCode: 'product2'
-            }]]);
+            }]);
         });
     });
 });
+
+
+
+

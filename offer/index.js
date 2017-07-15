@@ -7,33 +7,31 @@
 //
 // Only the new item added will trigger the offer.
 // Items already present are already considered to have matched a previous rule.
-//
-// Two arrays are returned: the array of items that were processed, and the items that were not.
 
 const freeItem = (productCode, buyNumber, takeNumber) => (oldItems, newItem) => {
     // Append the item and finish if the new item added was not matching.
-    const allItems = oldItems.slice();
-    allItems.push(newItem);
+    const result = oldItems.slice();
+    result.push(newItem);
 
     if (newItem.productCode !== productCode) {
-        return [[], allItems];
+        return result;
     }
 
     // Apply the offer by checking if the new count of matching products hits the desired amount,
     // and then add the remaining number.
-    const matchingItems = allItems.filter((item) => item.productCode === productCode);
+    const matchCount = result.filter((item) => item.productCode == productCode).length;
 
-    if (matchingItems.length !== buyNumber) {
-        return [[], allItems];
+    if (matchCount === buyNumber) {
+        const freeItemCount = takeNumber - buyNumber;
+
+        for (let i = 0; i < freeItemCount; i++) {
+            result.push(newItem);
+        }
     }
 
-    const freeItemCount = takeNumber - buyNumber;
-
-    for (let i = 0; i < freeItemCount; i++) {
-        matchingItems.push(newItem);
-    }
-
-    return [matchingItems, allItems.filter((item) => item.productCode !== productCode)];
+    return result;
 };
 
 module.exports.freeItem = freeItem;
+
+
