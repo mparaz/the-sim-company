@@ -36,6 +36,26 @@ const makeItemFree = (productCode, takeNumber, payNumber) => (items) => {
     return result;
 };
 
+const bulkDiscount = (productCode, quantity, newPrice) => (items) => {
+    const matchingItems = items.filter((item) => item.productCode === productCode);
+    if (matchingItems.length < quantity) {
+        return items;
+    } else {
+        return items.map((item) => {
+           if (item.productCode !== productCode) {
+               return item;
+           } else {
+               return {
+                   productCode: item.productCode,
+                   productName: item.productName,
+                   price: newPrice
+               };
+           }
+        });
+    }
+};
+
 module.exports.makeItemFree = makeItemFree;
+module.exports.bulkDiscount = bulkDiscount;
 
 
