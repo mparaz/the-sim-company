@@ -3,8 +3,6 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const Decimal = require('decimal.js');
-
 const offer = require('../../offer/index');
 
 describe('The SIM Company Offer', () => {
@@ -14,12 +12,12 @@ describe('The SIM Company Offer', () => {
             expect(f([{
                     productCode: 'someOtherProduct2',
                     productName: 'someOtherProduct2',
-                    price: new Decimal(3.21)
+                    price: 321
                 }]
             )).to.deep.equal([{
                 productCode: 'someOtherProduct2',
                 productName: 'someOtherProduct2',
-                price: new Decimal(3.21)
+                price: 321
             }]);
         });
 
@@ -27,21 +25,21 @@ describe('The SIM Company Offer', () => {
             const f = offer.bundleItem('product1', 1, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }, 1);
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }]);
         });
 
@@ -49,29 +47,29 @@ describe('The SIM Company Offer', () => {
             const f = offer.bundleItem('product1', 2, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }, 1);
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }, {
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }]);
         });
 
@@ -79,25 +77,25 @@ describe('The SIM Company Offer', () => {
             const f = offer.bundleItem('product1', 1, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }, 2);
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }]);
         });
 
@@ -105,29 +103,29 @@ describe('The SIM Company Offer', () => {
             const f = offer.bundleItem('product1', 1, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }, 1);
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }, {
                     productCode: 'otherProduct1',
                     productName: 'otherProduct1',
-                    price: new Decimal(4.56)
+                    price: 456
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'otherProduct1',
                 productName: 'otherProduct1',
-                price: new Decimal(4.56)
+                price: 456
             }, {
                 productCode: 'product2',
                 productName: 'product2',
-                price: new Decimal(2.34)
+                price: 234
             }]);
         });
     });

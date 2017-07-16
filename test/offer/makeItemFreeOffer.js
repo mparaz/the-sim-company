@@ -3,8 +3,6 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const Decimal = require('decimal.js');
-
 const offer = require('../../offer/index');
 
 describe('The SIM Company Offer', () => {
@@ -14,12 +12,12 @@ describe('The SIM Company Offer', () => {
             expect(f([{
                     productCode: 'someOtherProduct2',
                     productName: 'someOtherProduct2',
-                    price: new Decimal(3.21)
+                    price: 321
                 }]
             )).to.deep.equal([{
                 productCode: 'someOtherProduct2',
                 productName: 'someOtherProduct2',
-                price: new Decimal(3.21)
+                price: 321
             }]);
         });
 
@@ -28,20 +26,20 @@ describe('The SIM Company Offer', () => {
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }, {
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(0)
+                price: 0
             }]);
         });
 
@@ -50,28 +48,28 @@ describe('The SIM Company Offer', () => {
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }, {
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }, {
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(0)
+                price: 0
             }, {
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(0)
+                price: 0
             }]);
         });
 
@@ -80,28 +78,28 @@ describe('The SIM Company Offer', () => {
             expect(f([{
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }, {
                     productCode: 'product2',
                     productName: 'product1',
-                    price: new Decimal(5.67)
+                    price: 567
                 }, {
                     productCode: 'product1',
                     productName: 'product1',
-                    price: new Decimal(1.23)
+                    price: 123
                 }]
             )).to.deep.equal([{
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(1.23)
+                price: 123
             }, {
                 productCode: 'product2',
                 productName: 'product1',
-                price: new Decimal(5.67)
+                price: 567
             }, {
                 productCode: 'product1',
                 productName: 'product1',
-                price: new Decimal(0)
+                price: 0
             }]);
         });
     });

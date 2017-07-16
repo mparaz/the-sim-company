@@ -5,8 +5,6 @@
 // Items are distinct, each with a price, because offers may modify the price of one item independently of the
 // other (e.g. buy one and take half off the first one).
 
-const Decimal = require('decimal.js');
-
 const makeItemFree = (productCode, takeNumber, payNumber) => (items) => {
     const result = [];
 
@@ -20,7 +18,7 @@ const makeItemFree = (productCode, takeNumber, payNumber) => (items) => {
                 result.push({
                     productCode: item.productCode,
                     productName: item.productName,
-                    price: new Decimal(0)
+                    price: 0
                 });
             }
 
@@ -68,12 +66,11 @@ const bundleItem = (productCode, quantityMatch, bundledItem, quantityBundle) => 
 };
 
 const discountAll = (percentDiscount) => (items) => {
-    const factor = new Decimal(100 - percentDiscount) / new Decimal(100);
     return items.map((item) => {
         return {
             productCode: item.productCode,
             productName: item.productName,
-            price: item.price.times(factor)
+            price: Math.floor((item.price * (100 - percentDiscount)) / 100)
         };
     });
 };

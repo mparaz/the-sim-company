@@ -1,8 +1,5 @@
 'use strict';
 
-// Use fixed-point decimal for currency values.
-const Decimal = require('decimal.js');
-
 class ShoppingCart {
     constructor(pricingRules) {
         const catalogue = {};
@@ -44,8 +41,8 @@ class ShoppingCart {
         }
 
         return this._items.reduce((sum, item) => {
-            return sum.add(item.price);
-        }, new Decimal(0));
+            return sum + item.price;
+        }, 0);
     }
 
     items() {

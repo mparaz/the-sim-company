@@ -5,8 +5,6 @@ const expect = chai.expect;
 
 const ShoppingCart = require('../ShoppingCart');
 
-const Decimal = require('decimal.js');
-
 const sinon = require('sinon');
 
 describe('The SIM Company Cart', () => {
@@ -24,7 +22,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have no total and no items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(0));
+            expect(cart.total()).to.deep.equal(0);
             expect(cart.items()).to.deep.equal([]);
         });
     });
@@ -35,7 +33,7 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         beforeEach(() => {
@@ -52,7 +50,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and an item', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.45));
+            expect(cart.total()).to.deep.equal(12345);
             expect(cart.items()).to.deep.equal([item1]);
         });
     });
@@ -72,7 +70,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have no total and no items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(0));
+            expect(cart.total()).to.deep.equal(0);
             expect(cart.items()).to.deep.equal([]);
         });
     });
@@ -83,13 +81,13 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         const item2 = {
             productCode: 'productCode2',
             productName: 'productName2',
-            price: Decimal(678.90)
+            price: 67890
         };
 
         beforeEach(() => {
@@ -108,7 +106,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(802.35));
+            expect(cart.total()).to.deep.equal(80235);
             expect(cart.items()).to.deep.equal([item1, item2]);
         });
     });
@@ -120,7 +118,7 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         beforeEach(() => {
@@ -143,7 +141,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.45));
+            expect(cart.total()).to.deep.equal(12345);
             expect(cart.items()).to.deep.equal([item1]);
 
             expect(offerFn.calledWithExactly([item1])).to.equal(true);
@@ -157,20 +155,20 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         beforeEach(() => {
             offerFn1 = sinon.spy((items) => [{
                 productCode: 'productCode2',
                 productName: 'productName2',
-                price: Decimal(123.46)
+                price: 12346
             }]);
 
             offerFn2 = sinon.spy((items) => [{
                 productCode: 'productCode3',
                 productName: 'productName3',
-                price: Decimal(123.47)
+                price: 12347
             }]);
 
             cart = new ShoppingCart({
@@ -189,18 +187,18 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.47));
+            expect(cart.total()).to.deep.equal(12347);
             expect(cart.items()).to.deep.equal([{
                 productCode: 'productCode3',
                 productName: 'productName3',
-                price: Decimal(123.47)
+                price: 12347
             }]);
 
             expect(offerFn1.calledWithExactly([item1])).to.equal(true);
             expect(offerFn2.calledWithExactly([{
                 productCode: 'productCode2',
                 productName: 'productName2',
-                price: Decimal(123.46)
+                price: 12346
             }])).to.equal(true);
         });
     });
@@ -212,7 +210,7 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         beforeEach(() => {
@@ -234,7 +232,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.45));
+            expect(cart.total()).to.deep.equal(12345);
             expect(cart.items()).to.deep.equal([item1]);
 
             expect(offerFn.calledWithExactly([item1])).to.equal(true);
@@ -247,7 +245,7 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         beforeEach(() => {
@@ -266,7 +264,7 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.45));
+            expect(cart.total()).to.deep.equal(12345);
             expect(cart.items()).to.deep.equal([item1]);
         });
     });
@@ -278,20 +276,20 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         beforeEach(() => {
             offerFn1 = sinon.spy((items) => [{
                 productCode: 'productCode2',
                 productName: 'productName2',
-                price: Decimal(123.46)
+                price: 12346
             }]);
 
             offerFn2 = sinon.spy((items) => [{
                 productCode: 'productCode3',
                 productName: 'productName3',
-                price: Decimal(123.47)
+                price: 12347
             }]);
 
             cart = new ShoppingCart({
@@ -313,18 +311,18 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.47));
+            expect(cart.total()).to.deep.equal(12347);
             expect(cart.items()).to.deep.equal([{
                 productCode: 'productCode3',
                 productName: 'productName3',
-                price: Decimal(123.47)
+                price: 12347
             }]);
 
             expect(offerFn1.calledWithExactly([item1])).to.equal(true);
             expect(offerFn2.calledWithExactly([{
                 productCode: 'productCode2',
                 productName: 'productName2',
-                price: Decimal(123.46)
+                price: 12346
             }])).to.equal(true);
         });
     });
@@ -336,26 +334,26 @@ describe('The SIM Company Cart', () => {
         const item1 = {
             productCode: 'productCode1',
             productName: 'productName1',
-            price: Decimal(123.45)
+            price: 12345
         };
 
         const item2 = {
             productCode: 'productCode2',
             productName: 'productName2',
-            price: Decimal(0)
+            price: 0
         };
 
         beforeEach(() => {
             offerFn1 = sinon.spy((items) => [{
                 productCode: 'productCode2',
                 productName: 'productName2',
-                price: Decimal(123.46)
+                price: 12346
             }]);
 
             offerFn2 = sinon.spy((items) => [{
                 productCode: 'productCode3',
                 productName: 'productName3',
-                price: Decimal(123.47)
+                price: 12347
             }]);
 
             cart = new ShoppingCart({
@@ -378,18 +376,18 @@ describe('The SIM Company Cart', () => {
         });
 
         it('should have a total and items, coupon should not be applied twice', () => {
-            expect(cart.total()).to.deep.equal(new Decimal(123.47));
+            expect(cart.total()).to.deep.equal(12347);
             expect(cart.items()).to.deep.equal([{
                 productCode: 'productCode3',
                 productName: 'productName3',
-                price: Decimal(123.47)
+                price: 12347
             }]);
 
             expect(offerFn1.calledWithExactly([item1, item2])).to.equal(true);
             expect(offerFn2.calledWithExactly([{
                 productCode: 'productCode2',
                 productName: 'productName2',
-                price: Decimal(123.46)
+                price: 12346
             }])).to.equal(true);
         });
     });

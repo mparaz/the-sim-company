@@ -18,7 +18,9 @@
   "engines": {
     "node": ">=6.9.0"
   },
-  "dependencies": {
-    "decimal.js": "^7.2.3"
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mparaz/the-sim-company.git"
   }
 }
